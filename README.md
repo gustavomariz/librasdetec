@@ -1,4 +1,8 @@
+
 # Detector de Sinais de LIBRAS
+
+
+
 
 ## Objetivo
 
@@ -35,3 +39,15 @@ Durante a inferência em tempo real, quando um vídeo ou imagem é passado para 
 O modelo é projetado para ser eficiente e rápido, permitindo que o MediaPipe processe cada quadro de vídeo em tempo real, identificando e rastreando os pontos da mão à medida que ela se move. Isso é essencial para aplicações que exigem interações em tempo real, como controle gestual em jogos, realidade aumentada ou interfaces de usuário baseadas em gestos.
 
 Os pontos detectados são então traduzidos em coordenadas espaciais, fornecendo informações sobre a posição tridimensional dos marcos da mão. Esses dados são disponibilizados para os desenvolvedores, permitindo que eles criem interações personalizadas em seus aplicativos com base nos movimentos e gestos da mão.
+## Coleta e Processamento dos Dados
+
+Com a abordagem escolhida e o Mediapipe estudado, podemos seguir para o desenvolvimento.
+
+Para a coleta dos dados, desenvolvi o programa coleta_img.py para tirar 100 fotos minhas fazendo cada um dos sinais, tentando variar um pouco a posição da mão no frame da foto enquanto realizo a captura das fotos de um sinal. Assim foi gerada uma base com 2000 fotos, considerando que nesse projeto vou tentar identificar apenas 20 dígitos, excluindo os que têm sinais com movimento.
+
+Com essa base criada, vamos processar essas imagens com o Mediapipe por meio do programa processa_img.py. Nele, cada imagem é processada pelo Hands Landmarks Detection de forma que ele encontra cada landmark da mão na foto e retorna a posição desses pontos (x e y). Assim, cria-se uma nova base de dados, que ao invés de fotos, tem para cada linha coordenadas de pontos e um label, que no caso, é um id referente a letra feita no sinal da foto.
+
+Finalmente, por meio da biblioteca pickle, é gerado um arquivo dessa base de dados para a leitura posterior.
+ 
+## Treinamento
+
