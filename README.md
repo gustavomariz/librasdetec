@@ -2,9 +2,11 @@
 # Detector de Sinais de LIBRAS
 
 
+![libras-1024x585](https://github.com/gustavomariz/librasdetec/assets/82617621/62197e5c-79c2-4778-a73a-63bfd5b218b9)
 
 
 ## Objetivo
+
 
 Esse projeto tem como objetivo final desenvolver um programa que, à partir de uma câmera ao vivo, seja capaz de detectar os gestos da mão do usuário e identificar o sinal específico que está sendo realizado. Para esse projeto final de disciplina em específico, limitei o programa à identificação de dígitos do alfabeto em LIBRAS, desconsiderando aqueles que exigem, além de um símbolo com as mãos, um movimento.
 
@@ -28,6 +30,9 @@ Assim escolhi utilizar o Mediapipe, que além de simplificar o programa, na minh
 
 ## Sobre o Mediapipe
 
+![hand_crops](https://github.com/gustavomariz/librasdetec/assets/82617621/2b948af5-4068-4308-a911-b7dca352cdfb)
+
+
 O MediaPipe é uma estrutura de código aberto desenvolvida pelo Google, usada para processamento de mídia em tempo real, incluindo análise de vídeo, reconhecimento facial, detecção de objetos e muito mais. Ele oferece várias soluções pré-construídas, incluindo o módulo Hand Tracking (rastreamento de mãos), que fornece informações detalhadas sobre a localização e movimento das mãos em tempo real.
 
 O MediaPipe Hand Landmarks utiliza uma arquitetura de rede neural convolucional (CNN) para realizar o rastreamento preciso dos pontos da mão em tempo real. Esta CNN é treinada usando uma técnica chamada "supervisão fraca", na qual grandes quantidades de dados de mãos em diferentes poses são alimentadas à rede (mais de 30.000 imagens), permitindo que ela aprenda padrões visuais associados a esses pontos-chave.
@@ -36,9 +41,12 @@ No treinamento, a rede é exposta a imagens rotuladas, onde cada ponto da mão (
 
 Durante a inferência em tempo real, quando um vídeo ou imagem é passado para o modelo, a CNN realiza uma série de operações matriciais e convoluções para identificar características distintivas que representam os pontos específicos da mão. Isso pode incluir a detecção de bordas, padrões de textura e formas que são consistentes com dedos, palma e outras partes da mão.
 
-O modelo é projetado para ser eficiente e rápido, permitindo que o MediaPipe processe cada quadro de vídeo em tempo real, identificando e rastreando os pontos da mão à medida que ela se move. Isso é essencial para aplicações que exigem interações em tempo real, como controle gestual em jogos, realidade aumentada ou interfaces de usuário baseadas em gestos.
+O modelo é projetado para ser eficiente e rápido, permitindo que o MediaPipe processe cada quadro de vídeo em tempo real, identificando e rastreando os pontos da mão à medida que ela se move, algo essencial para cumprir o objetivo desse projeto. 
 
-Os pontos detectados são então traduzidos em coordenadas espaciais, fornecendo informações sobre a posição tridimensional dos marcos da mão. Esses dados são disponibilizados para os desenvolvedores, permitindo que eles criem interações personalizadas em seus aplicativos com base nos movimentos e gestos da mão.
+Os pontos detectados são então traduzidos em coordenadas espaciais, fornecendo informações sobre a posição tridimensional dos marcos da mão. Tal tradução me perimitiu simplificar os dados relativos às fotos ou ao vídeo ao vivo, os quais se tornaram, como dito anteriormente, apenas linhas com um label e a posição dos pontos. 
+
+Caso se interesse mais pela ferramenta e quiser testar você mesmo, segue o link para um teste web do Mediapipe Hands Landmarks Detector: https://developers.google.com/mediapipe/solutions/vision/gesture_recognizer
+
 ## Coleta e Processamento dos Dados
 
 Com a abordagem escolhida e o Mediapipe estudado, podemos seguir para o desenvolvimento.
@@ -51,3 +59,49 @@ Finalmente, por meio da biblioteca pickle, é gerado um arquivo dessa base de da
  
 ## Treinamento
 
+<img width="598" alt="Sklearn-Neural-Network-MLPRegressor-Regression-Model-" src="https://github.com/gustavomariz/librasdetec/assets/82617621/2a261f58-76f6-4ec5-b49a-069c1cc6dcce">
+
+Para o treinamento e classificação, quis trabalhar nesse projeto com redes neurais simples e, para isso, utilizei a biblioteca scikit-learn e sua implementação de um Multi-Layer Perceptron.
+
+o Multi-Layer Perceptron (MLP) Classifier é composto por várias camadas de neurônios, incluindo uma camada de entrada, uma ou mais camadas ocultas e uma camada de saída.
+
+A matemática por trás do MLP envolve uma série de operações, incluindo:
+
+- Camada de Entrada:
+
+    Cada neurônio na camada de entrada recebe um valor de entrada. Esses valores são os recursos ou características do conjunto de dados. Cada recurso é multiplicado por um peso correspondente.
+  
+- Camadas Ocultas:
+
+    Cada camada oculta é composta por neurônios que recebem os valores dos neurônios da camada anterior. Cada conexão entre neurônios tem um peso associado.
+Para calcular a saída de um neurônio na camada oculta, os valores de entrada são ponderados pelos pesos e somados. Essa soma é então passada por uma função de ativação, como a função sigmoide, tangente hiperbólica ou ReLU (Rectified Linear Unit).
+A função de ativação introduz não linearidade na rede, permitindo que ela aprenda relações complexas nos dados.
+
+- Camada de Saída:
+
+    Os valores calculados nas camadas ocultas são propagados para a camada de saída. Esta camada produz as previsões finais.
+A ativação na camada de saída pode variar dependendo do tipo de problema: uma função sigmoide é comumente usada para classificação binária, uma função softmax para classificação multiclasse e nenhuma ativação para regressão.
+    
+Durante o treinamento, a rede passa pelos seguintes passos:
+
+- Inicialização dos Pesos:
+
+    Os pesos da rede são inicializados aleatoriamente.
+  
+- Feedforward (Propagação Direta):
+
+    Os dados de entrada são alimentados pela rede, passando por cada camada até a camada de saída. As saídas são calculadas usando os pesos e as funções de ativação.
+  
+- Cálculo do Erro:
+
+    A diferença entre as previsões da rede e os rótulos reais do conjunto de treinamento é calculada usando uma função de custo, como a função de erro quadrático médio ou a entropia cruzada.
+  
+- Backpropagation (Retropropagação):
+
+    O algoritmo de retropropagação ajusta os pesos da rede para minimizar o erro calculado.
+    Os gradientes do erro em relação aos pesos são calculados usando o gradiente descendente, atualizando os pesos para reduzir gradualmente o erro.
+  
+- Atualização dos Pesos:
+
+    Os pesos são atualizados iterativamente usando otimizadores, como o Gradiente Descendente Estocástico (SGD) ou seus variantes, com uma taxa de aprendizado.
+    Este processo é repetido por várias épocas (iterações) até que a rede neural alcance uma boa performance nos dados de treinamento.
