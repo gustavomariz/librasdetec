@@ -115,13 +115,22 @@ Assim separei os dados em dados de treino e dados de teste (20% das imagens fora
 
 Por fim, salvei o modelo treinado no arquivo model.p para a posterior leitura.
 
-## Aplicatvo
+## Aplicativo
 
 O desenvolvimento do aplicativo foi bem simples, apenas utilizei a biblioteca opencv para abrir a janela com a câmera ao vivo, de forma que o Mediapipe recebe os frames da câmera e já forma os pontos e suas posições.
  Assim fui capaz de desenhar esses pontos na imagem, para ilustração e para identificar quando a mão está de fato sendo reconhecida corretamente. Com esses dados do Mediapipe sendo gerados a cada frame, eles passam pelo modelo treinado que identifica qual a letra referente ao sinal que está sendo feito, o que trouxe um resultado bem satisfatório.
+
+ Se quiser baixar o programa e testar você mesmo, será preciso instalar as bibliotecas comentadas (opencv, scikit-learn, mediapipe) e fazer o download da pasta data, com as fotos dos sinais. 
+ Por ser uma pasta pesada, o github não me permitiu fazer o upload, então segue um drive para download: https://drive.google.com/file/d/1_EMsKUeO_TQqul_ZYvKDUL4srZ37IdQd/view?usp=sharing
+ Também é possível gerar a pasta data você mesmo, só rodar o programa coleta_img.py e fazer os 20 dígitos em LIBRAS sem movimento (apertando Q para dar início a captura de cada um).
 
  Segue um vídeo com o aplicativo em funcionamento:
 
 https://github.com/gustavomariz/librasdetec/assets/82617621/d3c8a827-e28b-45f5-b2b2-bb926c1d3132
 
+## Algumas Dificuldades e Possíveis Melhoras
 
+Fica claro no vídeo que algumas letras se confundem, como a dificuldade do D ser identificado ou então o fato de muitas vezes ele não conseguir diferenciar o U do V, sendo esses os problemas maiores qu encontrei.
+Acredito que essas dificuldades não estejam atreladas somente ao modelo, mas também aos dados de treino. Eu aprendi os sinais de LIBRAS para esse trabalho, logo, não garanto que fiz as melhores e mais claras representações dos sinais para o treino.
+
+Treinando o programa com uma pessoa que já tenha experiência com LIBRAS, talvez o resultado fosse ainda mais satisfatório.
