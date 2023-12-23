@@ -122,4 +122,6 @@ O desenvolvimento do aplicativo foi bem simples, apenas utilizei a biblioteca op
 
  Segue um vídeo com o aplicativo em funcionamento:
 
- 
+https://github.com/gustavomariz/librasdetec/assets/82617621/d3c8a827-e28b-45f5-b2b2-bb926c1d3132
+
+
