@@ -96,12 +96,30 @@ Durante o treinamento, a rede passa pelos seguintes passos:
 
     A diferença entre as previsões da rede e os rótulos reais do conjunto de treinamento é calculada usando uma função de custo, como a função de erro quadrático médio ou a entropia cruzada.
   
-- Backpropagation (Retropropagação):
+- Backpropagation:
 
-    O algoritmo de retropropagação ajusta os pesos da rede para minimizar o erro calculado.
+    O algoritmo de backpropagation ajusta os pesos da rede para minimizar o erro calculado.
     Os gradientes do erro em relação aos pesos são calculados usando o gradiente descendente, atualizando os pesos para reduzir gradualmente o erro.
   
 - Atualização dos Pesos:
 
-    Os pesos são atualizados iterativamente usando otimizadores, como o Gradiente Descendente Estocástico (SGD) ou seus variantes, com uma taxa de aprendizado.
-    Este processo é repetido por várias épocas (iterações) até que a rede neural alcance uma boa performance nos dados de treinamento.
+    Os pesos são atualizados iterativamente usando otimizadores, como o Gradiente Descendente Estocástico (SGD) com uma taxa de aprendizado.
+    Este processo é repetido por várias iterações até que a rede neural alcance uma boa performance nos dados de treinamento ou atinja o número máximo de iterações estipulado.
+
+Para o programa em questão, fiz testes com diferentes parâmetros do MLPClassifier e cheguei numa construção bem simples da rede que é mais do que suficiente para atender a classificação desejada.
+No caso a rede construída tem apenas uma camada oculta com 50 nós, e um número máximo de iterações de 500. Além disso, foi escolhida a função de ativação "relu". 
+Ela é uma função simples e eficaz que retorna zero para valores negativos e o próprio valor para valores positivos. Apesar da sua simplicidade, sua natureza de ativação não-linear já é suficiente para a rede aprender relações complexas nos dados.
+Os outros parâmetro relativos ao cálculo do erro, sua tolerância e ao cálculo do gradiente descendente são os já predefinidos pela biblioteca, se quiser conferir exatamente acesse aqui: https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html
+
+Assim separei os dados em dados de treino e dados de teste (20% das imagens foram separadas para teste). Após realizar o treino, foi identificada uma precisão de 100% (pode haver um overfitting, pelo problema ser bem simples, mas nos testes práticos o programa funciona bem).
+
+Por fim, salvei o modelo treinado no arquivo model.p para a posterior leitura.
+
+## Aplicatvo
+
+O desenvolvimento do aplicativo foi bem simples, apenas utilizei a biblioteca opencv para abrir a janela com a câmera ao vivo, de forma que o Mediapipe recebe os frames da câmera e já forma os pontos e suas posições.
+ Assim fui capaz de desenhar esses pontos na imagem, para ilustração e para identificar quando a mão está de fato sendo reconhecida corretamente. Com esses dados do Mediapipe sendo gerados a cada frame, eles passam pelo modelo treinado que identifica qual a letra referente ao sinal que está sendo feito, o que trouxe um resultado bem satisfatório.
+
+ Segue um vídeo com o aplicativo em funcionamento:
+
+ 
